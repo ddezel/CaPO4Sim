@@ -4,7 +4,7 @@
 \alias{infos}
 \title{Info server module}
 \usage{
-infos(input, output, session, diseases, animation_counter, regulations)
+infos(input, output, session, casestudies, animation_counter, regulations)
 }
 \arguments{
 \item{input}{Shiny inputs}
@@ -13,7 +13,7 @@ infos(input, output, session, diseases, animation_counter, regulations)
 
 \item{session}{Session object.}
 
-\item{diseases}{Shiny input disease selector. See \link{diseaseSelect}.}
+\item{casestudies}{Shiny input casestudies selector. See \link{casestudiesSelect}.}
 
 \item{animation_counter}{Give the current temporal state of the animation. See \link{networkCaPO4}.}
 

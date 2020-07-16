@@ -11,7 +11,7 @@ colfuncPO4 <- colorRampPalette(c("darkred", "pink", "yellow"))(20)
 #'
 #' @description Use inside the \link{plotBox} module.
 #'
-#' @param sliderVal Shiny slider input related to the current disease severity.
+#' @param sliderVal Shiny slider input related to the current casestudy severity.
 #' See \link{plotBox}.
 #' @param isMobile Shiny input useful to scale elements based on the device screen size.
 #'
@@ -196,7 +196,7 @@ make_plot_php1 <- function(sliderVal, isMobile) {
 #'
 #' @description Use inside the \link{plotBox} module.
 #'
-#' @param sliderVal Shiny slider input related to the current disease severity.
+#' @param sliderVal Shiny slider input related to the current casestudy severity.
 #' See \link{plotBox}.
 #' @param isMobile Shiny input useful to scale elements based on the device screen size.
 #'
@@ -397,7 +397,7 @@ make_plot_hypoD3 <- function(sliderVal, isMobile) {
 #'
 #' @description Use inside the \link{plotBox} module.
 #'
-#' @param sliderVal Shiny slider input related to the current disease severity.
+#' @param sliderVal Shiny slider input related to the current casestudy severity.
 #' See \link{plotBox}.
 #' @param isMobile Shiny input useful to scale elements based on the device screen size.
 #'

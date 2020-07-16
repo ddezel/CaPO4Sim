@@ -4,12 +4,12 @@
 \alias{generate_userFields}
 \title{Generate user fields}
 \usage{
-generate_userFields(diseases, sliderDisease)
+generate_userFields(casestudies, sliderCasestudies)
 }
 \arguments{
-\item{diseases}{Shiny input disease selector. See \link{diseaseSelect}.}
+\item{casestudies}{Shiny input casestudy selector. See \link{casestudiesSelect}.}
 
-\item{sliderDisease}{Shiny slider input related to the current disease severity.
+\item{sliderCasestudies}{Shiny slider input related to the current casestudy severity.
 See \link{plotBox}.}
 }
 \description{

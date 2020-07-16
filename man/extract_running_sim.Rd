@@ -4,12 +4,12 @@
 \alias{extract_running_sim}
 \title{Extract the current running simulation}
 \usage{
-extract_running_sim(diseases)
+extract_running_sim(casestudies)
 }
 \arguments{
-\item{diseases}{Shiny input disease selector. See \link{diseaseSelect}.}
+\item{casestudies}{Shiny input casestudies selector. See \link{casestudiesSelect}.}
 }
 \description{
 Simulations are currently php1, hypoD3 and hypopara. Takes
-diseases as input given by the \link{diseaseSelect} module.
+casestudies as input given by the \link{casestudiesSelect} module.
 }

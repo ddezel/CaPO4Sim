@@ -65,7 +65,7 @@ networkCaPO4Ui <- function(id) {
 #' @param organs Shiny input to toggle organs display. See \link{networkOptions}.
 #' @param regulations Shiny input to toggle hormone display. See \link{networkOptions}.
 #' @param background Shiny input background selector. See \link{networkOptions}.
-#' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
+#' @param casestudies Shiny input casestudies selector. See \link{casestudiesSelect}.
 #' @param organs_nodes_size Shiny input for organs node size. See \link{networkOptions}.
 #' @param hormones_nodes_size Shiny input for hormones node size. See \link{networkOptions}.
 #' @param organs_edges_size Shiny input for organs edges size. See \link{networkOptions}.
@@ -74,7 +74,7 @@ networkCaPO4Ui <- function(id) {
 #'
 #' @export
 networkCaPO4 <- function(input, output, session, isMobile, components,
-                         organs, regulations, background, diseases,
+                         organs, regulations, background, casestudies,
                          organs_nodes_size, hormones_nodes_size,
                          organs_edges_size, hormones_edges_size, help) {
 
@@ -98,7 +98,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       organs,
       regulations,
       background,
-      diseases,
+      casestudies,
       organs_nodes_size,
       hormones_nodes_size
     )
@@ -109,7 +109,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
       components,
       organs,
       regulations,
-      diseases,
+      casestudies,
       organs_edges_size,
       hormones_edges_size
     )
@@ -167,8 +167,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
   # back button
   output$back_button <- renderUI({
 
-    if (diseases$php1() | diseases$hypopara() |
-        diseases$hypoD3() | help()) {
+    if (casestudies$php1() | casestudies$hypopara() |
+        casestudies$hypoD3() | help()) {
       column(
         width = 4,
         # handle small screens
@@ -189,8 +189,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
   # next button
   output$next_button <- renderUI({
 
-    if (diseases$php1() | diseases$hypopara() |
-        diseases$hypoD3() | help()) {
+    if (casestudies$php1() | casestudies$hypopara() |
+        casestudies$hypoD3() | help()) {
       column(
         width = 4,
         align = "left",
@@ -216,8 +216,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
 
   # progress
   output$counter_progress <- renderUI({
-    if (diseases$php1() | diseases$hypopara() |
-        diseases$hypoD3() | help()) {
+    if (casestudies$php1() | casestudies$hypopara() |
+        casestudies$hypoD3() | help()) {
 
       column(
         width = 4,
@@ -359,8 +359,8 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
     }
   })
 
-  # reset also if another simulation is choosen
-  observeEvent(c(diseases$php1(), diseases$hypopara(), diseases$hypoD3()), {
+  # reset also if another simulation is chosen
+  observeEvent(c(casestudies$php1(), casestudies$hypopara(), casestudies$hypoD3()), {
     counter_nav$diagram <- 0
     edges<- edges()
     edges$color <- "black"
@@ -373,19 +373,19 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
   observeEvent(input$nextStep | input$previousStep , {
 
     edges <- edges()
-    current_sim <- extract_running_sim(diseases)
+    current_sim <- extract_running_sim(casestudies)
     # only if a simulation is selected
     # dynamics simulations are excluded since calculations
     # are performed live contrary to steady-state simulations
     if (!is_empty(current_sim)) {
-      if (eval(parse(text = paste0("diseases$", current_sim, "()")))) {
+      if (eval(parse(text = paste0("casestudies$", current_sim, "()")))) {
 
         # the code below ensures that nodes related to
         # perturbations, ie PTHg for php1 and hypopara
         # D3 nodes for hypoD3, blink when the counter equals 1
         if (counter_nav$diagram == 1) {
           nodes <- nodes()
-          if (diseases$php1() | diseases$hypopara()) {
+          if (casestudies$php1() | casestudies$hypopara()) {
             lapply(1:2, FUN = function(i){
               if ((i %% 2) != 0) {
                 nodes$hidden[11] <- TRUE
@@ -398,7 +398,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
               }
               Sys.sleep(0.5)
             })
-          } else if (diseases$hypoD3()) {
+          } else if (casestudies$hypoD3()) {
             lapply(1:2, FUN = function(i){
               if ((i %% 2) != 0) {
                 nodes$hidden[c(13:15)] <- TRUE
@@ -442,7 +442,7 @@ networkCaPO4 <- function(input, output, session, isMobile, components,
     )
 
     ## show the modal related to the current running simulation
-    current_sim <- extract_running_sim(diseases)
+    current_sim <- extract_running_sim(casestudies)
     if (is.null(current_sim)) {
       if (!is.null(node_id_zoom)) {
         showModal(eval(parse(text = paste("modal_zoom", node_id_zoom, sep = "_"))))

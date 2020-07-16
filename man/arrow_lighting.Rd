@@ -9,7 +9,7 @@ arrow_lighting(edges, simulation, counter, session)
 \arguments{
 \item{edges}{A dataframe of edges provided by \link{generate_edges}.}
 
-\item{simulation}{Which disease is currently selected. See \link{extract_running_sim}.}
+\item{simulation}{Which casestudy is currently selected. See \link{extract_running_sim}.}
 
 \item{counter}{To determine which notification to display. We expect a counter
 returned by the \link{networkCaPO4} module.}

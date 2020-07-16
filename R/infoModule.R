@@ -53,14 +53,14 @@ infoSwitch <- function(inputId, label) {
 #' @param input Shiny inputs
 #' @param output Shiny Outputs
 #' @param session Session object.
-#' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
+#' @param casestudies Shiny input casestudies selector. See \link{casestudiesSelect}.
 #' @param animation_counter Give the current temporal state of the animation. See \link{networkCaPO4}.
 #' @param regulations Shiny input to toggle hormone display. See \link{networkOptions}.
 #'
 #' @importFrom shiny observeEvent observe showModal
 #'
 #' @export
-infos <- function(input, output, session, diseases, animation_counter, regulations) {
+infos <- function(input, output, session, casestudies, animation_counter, regulations) {
 
   #-------------------------------------------------------------------------
   #  Educational content: modals, network and graph notifications,
@@ -69,10 +69,10 @@ infos <- function(input, output, session, diseases, animation_counter, regulatio
 
   # Modal for primary hyperparathyroidism, hypopara, ...
   # gives the user some extra information
-  observeEvent(c(diseases$php1(), diseases$hypopara(), diseases$hypoD3()), {
+  observeEvent(c(casestudies$php1(), casestudies$hypopara(), casestudies$hypoD3()), {
 
     # show the modal related to the current running simulation
-    current_sim <- extract_running_sim(diseases)
+    current_sim <- extract_running_sim(casestudies)
     req(current_sim)
     if (input$modal_switch) {
       showModal(eval(parse(text = paste("modal", current_sim, sep = "_"))))
@@ -83,13 +83,13 @@ infos <- function(input, output, session, diseases, animation_counter, regulatio
   # Notification events for PHP1, hypoD3 and hypopara in the CaPO4 network
   # as well as the graph
   observeEvent(
-    c(diseases$php1(), diseases$hypopara(), diseases$hypoD3(),
+    c(casestudies$php1(), casestudies$hypopara(), casestudies$hypoD3(),
       animation_counter(), input$notif2_switch), {
 
-        current_simulation <- extract_running_sim(diseases)
+        current_simulation <- extract_running_sim(casestudies)
         req(current_simulation)
 
-        if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
+        if (casestudies$php1() | casestudies$hypopara() | casestudies$hypoD3()) {
 
           generate_notification(
             counter = animation_counter(),
@@ -104,10 +104,10 @@ infos <- function(input, output, session, diseases, animation_counter, regulatio
 
   # indicates the user to enable regulations when he launches case studies
   # if they are not already enabled
-  observeEvent(c(diseases$php1(), diseases$hypopara(), diseases$hypoD3()), {
+  observeEvent(c(casestudies$php1(), casestudies$hypopara(), casestudies$hypoD3()), {
 
-      current_simulation <- extract_running_sim(diseases)
-      input_current_simulation <- paste0("diseases$", current_simulation, "()")
+      current_simulation <- extract_running_sim(casestudies)
+      input_current_simulation <- paste0("casestudies$", current_simulation, "()")
       if (!is_empty(current_simulation)) {
         if (eval(parse(text = input_current_simulation)) & !regulations()) {
           shinyWidgets::sendSweetAlert(
@@ -131,7 +131,7 @@ infos <- function(input, output, session, diseases, animation_counter, regulatio
   # indicate when a user has finished the current activity
   observe({
     if (animation_counter() == 6) {
-      current_simulation <- extract_running_sim(diseases)
+      current_simulation <- extract_running_sim(casestudies)
       shinyWidgets::sendSweetAlert(
         session = session,
         type = "success",

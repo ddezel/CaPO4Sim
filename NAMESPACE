@@ -2,8 +2,8 @@
 
 export("%>%")
 export(arrow_lighting)
-export(diseaseSelect)
-export(diseaseSelectUi)
+export(casestudiesSelect)
+export(casestudiesSelectUi)
 export(extract_running_sim)
 export(fullScreen)
 export(fullScreenUI)

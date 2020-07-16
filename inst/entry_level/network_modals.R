@@ -37,14 +37,14 @@ modal_img <- function(src, size = "100%") {
 #' @param ... Modal content.
 #' @param title Modal title.
 #' @param location Organ location. Can be \code{c("intestine", "bones", "kidneys", "PTHg")}.
-#' @param diseases Current diseases. NULL or \code{c("php1", "hypopara", "hypoD3")}.
-generate_modal <- function(..., title, location, diseases = NULL) {
+#' @param casestudies Current casestudies. NULL or \code{c("php1", "hypopara", "hypoD3")}.
+generate_modal <- function(..., title, location, casestudies = NULL) {
 
   # modal name
-  modalName <- if(is.null(diseases)) {
+  modalName <- if(is.null(casestudies)) {
     paste0("modal_zoom_", location)
   } else {
-    paste0("modal_zoom_", location, "_", diseases)
+    paste0("modal_zoom_", location, "_", casestudies)
   }
 
   # modal Tag
@@ -61,7 +61,7 @@ generate_modal <- function(..., title, location, diseases = NULL) {
 }
 
 
-diseases_ids <-  c("base_case", "php1", "hypopara", "hypoD3")
+casestudies_ids <-  c("base_case", "php1", "hypopara", "hypoD3")
 locations <- c("intestine", "bones", "kidneys", "PTHg")
 
 
@@ -69,30 +69,30 @@ locations <- c("intestine", "bones", "kidneys", "PTHg")
 #'
 #' @description Creates a all modals (16)
 #'
-#' @param diseases Current diseases. NULL or \code{c("php1", "hypopara", "hypoD3")}.
+#' @param casestudies Current casestudies. NULL or \code{c("php1", "hypopara", "hypoD3")}.
 #' @param location Organ location. Can be \code{c("intestine", "bones", "kidneys", "PTHg")}.
-create_all_modals <- function(diseases, locations) {
+create_all_modals <- function(casestudies, locations) {
   lapply(seq_along(locations), FUN = function(i) {
-    lapply(seq_along(diseases), FUN = function(j) {
+    lapply(seq_along(casestudies), FUN = function(j) {
 
       generate_modal(
-        title = if (diseases[[j]] == "base_case") {
+        title = if (casestudies[[j]] == "base_case") {
           paste("Detailed Baseline", locations[[i]], "Mechanisms")
-        } else if (diseases[[j]] == "php1") {
+        } else if (casestudies[[j]] == "php1") {
           paste("Detailed", locations[[i]] , "Mechanisms During Primary Hyperparathyroidism")
-        } else if (diseases[[j]] == "hypopara") {
+        } else if (casestudies[[j]] == "hypopara") {
           paste("Detailed", locations[[i]] , "Mechanisms During Hypoparathyroidism")
         } else {
           paste("Detailed", locations[[i]] , "Mechanisms During Vitamin D3 Deficiency")
         },
         location = locations[[i]],
-        diseases = if (j == 1) NULL else diseases[[j]],
+        casestudies = if (j == 1) NULL else casestudies[[j]],
         if (locations[[i]] == "intestine") {
           fluidRow(
             column(
               width = 12,
               align = "center",
-              modal_img(paste0(diseases[[j]], "_zoom/intestine/", diseases[[j]], "_notif_intestine.svg"))
+              modal_img(paste0(casestudies[[j]], "_zoom/intestine/", casestudies[[j]], "_notif_intestine.svg"))
             )
           )
         } else if (locations[[i]] == "bones") {
@@ -103,7 +103,7 @@ create_all_modals <- function(diseases, locations) {
                 align = "center",
                 "Effect of PTH on bone",
                 br(),
-                modal_img(paste0(diseases[[j]], "_zoom/bone/", diseases[[j]], "_notif_bone1.svg"))
+                modal_img(paste0(casestudies[[j]], "_zoom/bone/", casestudies[[j]], "_notif_bone1.svg"))
               )
             ),
             hr(),
@@ -113,7 +113,7 @@ create_all_modals <- function(diseases, locations) {
                 align = "center",
                 "Effect of D3 on bone",
                 br(),
-                modal_img(paste0(diseases[[j]], "_zoom/bone/", diseases[[j]], "_notif_bone2.svg"))
+                modal_img(paste0(casestudies[[j]], "_zoom/bone/", casestudies[[j]], "_notif_bone2.svg"))
               )
             )
           )
@@ -125,14 +125,14 @@ create_all_modals <- function(diseases, locations) {
                 align = "center",
                 "Detailed Ca PT reabsorption",
                 br(),
-                modal_img(src = paste0(diseases[[j]], "_zoom/kidney/", diseases[[j]], "_notif_kidney1.svg"))
+                modal_img(src = paste0(casestudies[[j]], "_zoom/kidney/", casestudies[[j]], "_notif_kidney1.svg"))
               ),
               column(
                 width = 6,
                 align = "center",
                 "Detailed Pi PT reabsorption",
                 br(),
-                modal_img(src = paste0(diseases[[j]], "_zoom/kidney/", diseases[[j]], "_notif_kidney2.svg"))
+                modal_img(src = paste0(casestudies[[j]], "_zoom/kidney/", casestudies[[j]], "_notif_kidney2.svg"))
               )
             ),
             hr(),
@@ -142,19 +142,19 @@ create_all_modals <- function(diseases, locations) {
                 align = "center",
                 "Detailed Ca TAL reabsorption",
                 br(),
-                modal_img(src = paste0(diseases[[j]], "_zoom/kidney/", diseases[[j]], "_notif_kidney3.svg"))
+                modal_img(src = paste0(casestudies[[j]], "_zoom/kidney/", casestudies[[j]], "_notif_kidney3.svg"))
               ),
               column(
                 width = 6,
                 align = "center",
                 "Detailed Ca DCT reabsorption",
                 br(),
-                modal_img(src = paste0(diseases[[j]], "_zoom/kidney/", diseases[[j]], "_notif_kidney4.svg"))
+                modal_img(src = paste0(casestudies[[j]], "_zoom/kidney/", casestudies[[j]], "_notif_kidney4.svg"))
               )
             )
           )
         } else {
-          if (diseases[[j]] == "base_case") {
+          if (casestudies[[j]] == "base_case") {
             fluidRow(
               column(
                 width = 12,
@@ -162,7 +162,7 @@ create_all_modals <- function(diseases, locations) {
                 modal_img("base_case_zoom/PTHg/base_case_notif_PTHg.svg")
               )
             )
-          } else if (diseases[[j]] == "hypoD3") {
+          } else if (casestudies[[j]] == "hypoD3") {
             fluidRow(
               column(
                 width = 12,
@@ -231,4 +231,4 @@ create_all_modals <- function(diseases, locations) {
   })
 }
 
-create_all_modals(diseases = diseases_ids, locations = locations)
+create_all_modals(casestudies = casestudies_ids, locations = locations)

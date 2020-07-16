@@ -7,7 +7,7 @@
 generate_notification(simulation, counter, allowed)
 }
 \arguments{
-\item{simulation}{Which disease is currently selected. See \link{extract_running_sim}.}
+\item{simulation}{Which casestudy is currently selected. See \link{extract_running_sim}.}
 
 \item{counter}{To determine which notification to display. We expect a counter
 returned by the \link{networkCaPO4} module.}
@@ -16,6 +16,6 @@ returned by the \link{networkCaPO4} module.}
 }
 \description{
 Generate sequential notification as a function of the
-selected diseases. All notifications are in the notifications.R file in the
+selected casestudies. All notifications are in the notifications.R file in the
 inst/entry_level app folder. Used in the \link{infos} module.
 }

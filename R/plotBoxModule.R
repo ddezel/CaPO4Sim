@@ -24,9 +24,9 @@ plotBoxUi <- function(id) {
       # be careful about the namespace
       # (need to update manually if the father module id is updated)
       condition = "
-          input['diseases-run_php1'] |
-          input['diseases-run_hypopara'] |
-          input['diseases-run_hypoD3'] |
+          input['casestudies-run_php1'] |
+          input['casestudies-run_hypopara'] |
+          input['casestudies-run_hypoD3'] |
           input['help_section-help']
         ",
       # main graph
@@ -64,13 +64,13 @@ plotBoxUi <- function(id) {
       ),
       column(width = 4, align = "left"),
 
-      # slider to control the disease intensity
+      # slider to control the casestudy severity
       column(
         width = 4, align = "center",
         br(),
         rintrojs::introBox(
           uiOutput(
-            outputId = ns("slider_disease"),
+            outputId = ns("slider_casestudies"),
             class = "theme-orange"
           ),
           data.step = 4,
@@ -108,33 +108,33 @@ plotBoxUi <- function(id) {
 #' @param input Shiny inputs
 #' @param output Shiny Outputs
 #' @param session Session object.
-#' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
+#' @param casestudies Shiny input casestudies selector. See \link{casestudiesSelect}.
 #' @param help Help input.
 #' @param isMobile Shiny input useful to scale elements based on the device screen size.
 #'
 #' @export
-plotBox <- function(input, output, session, diseases, help, isMobile) {
+plotBox <- function(input, output, session, casestudies, help, isMobile) {
 
   ns <- session$ns
 
   #-------------------------------------------------------------------------
-  # Create slider for diseases (needed by plots)
+  # Create slider for casestudies (needed by plots)
   #-------------------------------------------------------------------------
 
   # Generate sliders for php1, hypopara and hypoD3 and even help
   slider <- reactive({
 
-    if (!is.null(diseases) | help()) {
-      if (diseases$php1() | diseases$hypopara() | diseases$hypoD3() | help()) {
+    if (!is.null(casestudies) | help()) {
+      if (casestudies$php1() | casestudies$hypopara() | casestudies$hypoD3() | help()) {
 
-        current_sim <- extract_running_sim(diseases)
+        current_sim <- extract_running_sim(casestudies)
 
-        sliderChoices <- if (diseases$php1() | help()) c(20, 100, 200) else c(0, 0.1, 0.5)
+        sliderChoices <- if (casestudies$php1() | help()) c(20, 100, 200) else c(0, 0.1, 0.5)
         sliderValue <- if (help()) {
           100
         } else {
-          if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-            if (diseases$php1()) {
+          if (casestudies$php1() | casestudies$hypopara() | casestudies$hypoD3()) {
+            if (casestudies$php1()) {
               100
             } else {
               0
@@ -148,11 +148,11 @@ plotBox <- function(input, output, session, diseases, help, isMobile) {
 
         sliderTag <- shinyWidgets::sliderTextInput(
           inputId = ns(sliderId),
-          label = if (diseases$php1() | help()) {
+          label = if (casestudies$php1() | help()) {
             "Normalized PTH mRNA synthesis (baseline=1)"
-          } else if (diseases$hypopara()) {
+          } else if (casestudies$hypopara()) {
             "Normalized PTH mRNA synthesis (baseline=1)"
-          } else if (diseases$hypoD3()) {
+          } else if (casestudies$hypoD3()) {
             "Normalized 25(OH)D stock (baseline=1)"
           },
           choices = sliderChoices,
@@ -167,7 +167,7 @@ plotBox <- function(input, output, session, diseases, help, isMobile) {
   })
 
 
-  output$slider_disease <- renderUI(slider()[[1]])
+  output$slider_casestudies <- renderUI(slider()[[1]])
 
   #-------------------------------------------------------------------------
   # Create plots
@@ -185,7 +185,7 @@ plotBox <- function(input, output, session, diseases, help, isMobile) {
       make_plot_php1(sliderVal = sliderValue, isMobile = isMobile())
     } else {
       # extract the current simulation
-      current_sim <- extract_running_sim(diseases)
+      current_sim <- extract_running_sim(casestudies)
       req(current_sim)
 
       # avoid that plotly returns an error when current_sim is empty
@@ -202,7 +202,7 @@ plotBox <- function(input, output, session, diseases, help, isMobile) {
 
   # Print a short help text in the graph part
   output$info <- renderUI({
-    if (sum(c(diseases$php1(), diseases$hypopara(), diseases$hypoD3())) == 0 && help() == 0) {
+    if (sum(c(casestudies$php1(), casestudies$hypopara(), casestudies$hypoD3())) == 0 && help() == 0) {
 
       withMathJax(
         HTML(
@@ -293,6 +293,6 @@ plotBox <- function(input, output, session, diseases, help, isMobile) {
     }
   })
 
-  # return slider disease
+  # return slider casestudies
   return(reactive(input[[slider()[[2]]]]))
 }

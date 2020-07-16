@@ -65,7 +65,7 @@ shinyApp(
     callModule(module = fullScreen, id = "fullScreenTrigger")
     callModule(module = skinSelect, id = "skin")
     callModule(module = glossaryCaPO4, id = "lexicus")
-    diseases <- callModule(module = diseaseSelect, id = "diseases")
+    casestudies <- callModule(module = casestudiesSelect, id = "casestudies")
     networkOptions <- callModule(module = networkOptions, id = "network_options", mobile = isMobile)
 
     # network module
@@ -77,7 +77,7 @@ shinyApp(
       organs = networkOptions$organs,
       regulations = networkOptions$regulations,
       background = networkOptions$background,
-      diseases = diseases,
+      casestudies = casestudies,
       organs_nodes_size = networkOptions$organs_nodes_size,
       hormones_nodes_size = networkOptions$hormones_nodes_size,
       organs_edges_size = networkOptions$organs_edges_size,
@@ -89,15 +89,15 @@ shinyApp(
     callModule(
       module = infos,
       id = "infos",
-      diseases = diseases,
+      casestudies = casestudies,
       animation_counter = network_utils$counter,
       regulations = networkOptions$regulations
     )
 
     # plot module
-    slider_disease <- callModule(module = plotBox, id = "graphs", diseases = diseases, help = help, isMobile = isMobile)
+    slider_casestudies <- callModule(module = plotBox, id = "graphs", casestudies = casestudies, help = help, isMobile = isMobile)
 
     # userInfo module
-    callModule(module = userInfo, id = "rat", diseases = diseases, sliderDisease = slider_disease, help = help)
+    callModule(module = userInfo, id = "rat", casestudies = casestudies, sliderCasestudies = slider_casestudies, help = help)
   }
 )

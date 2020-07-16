@@ -4,7 +4,7 @@
 \alias{userInfo}
 \title{CaPO4 user info server module}
 \usage{
-userInfo(input, output, session, diseases, sliderDisease, help)
+userInfo(input, output, session, casestudies, sliderCasestudies, help)
 }
 \arguments{
 \item{input}{Shiny inputs}
@@ -13,9 +13,9 @@ userInfo(input, output, session, diseases, sliderDisease, help)
 
 \item{session}{Session object.}
 
-\item{diseases}{Shiny input disease selector. See \link{diseaseSelect}.}
+\item{casestudies}{Shiny input casestudies selector. See \link{casestudiesSelect}.}
 
-\item{sliderDisease}{Shiny input disease severity selector. See \link{plotBox}.}
+\item{sliderCasestudies}{Shiny input casestudy severity selector. See \link{plotBox}.}
 
 \item{help}{Help input.}
 }

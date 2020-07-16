@@ -8,7 +8,7 @@ generate_edges(
   components,
   organs,
   regulations,
-  diseases,
+  casestudies,
   organs_edges_size,
   hormones_edges_size
 )
@@ -20,7 +20,7 @@ generate_edges(
 
 \item{regulations}{Shiny input to toggle hormone display. See \link{networkOptions}.}
 
-\item{diseases}{Shiny input disease selector. See \link{diseaseSelect}.}
+\item{casestudies}{Shiny input casestudies selector. See \link{casestudiesSelect}.}
 
 \item{organs_edges_size}{Shiny input for organs edges size. See \link{networkOptions}.}
 

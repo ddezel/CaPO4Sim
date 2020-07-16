@@ -1,10 +1,10 @@
 #' @title Notifications Generator for CaPO4 animations
 #'
 #' @description Generate sequential notification as a function of the
-#' selected diseases. All notifications are in the notifications.R file in the
+#' selected casestudies. All notifications are in the notifications.R file in the
 #' inst/entry_level app folder. Used in the \link{infos} module.
 #'
-#' @param simulation Which disease is currently selected. See \link{extract_running_sim}.
+#' @param simulation Which casestudy is currently selected. See \link{extract_running_sim}.
 #' @param counter To determine which notification to display. We expect a counter
 #' returned by the \link{networkCaPO4} module.
 #' @param allowed Whether to allow simulations. Expect logical value. See \link{infos} module.
@@ -58,15 +58,15 @@ dropNulls <- function (x) x[!vapply(x, is.null, FUN.VALUE = logical(1))]
 #' @title Extract the current running simulation
 #'
 #' @description Simulations are currently php1, hypoD3 and hypopara. Takes
-#' diseases as input given by the \link{diseaseSelect} module.
+#' casestudies as input given by the \link{casestudiesSelect} module.
 #'
-#' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
+#' @param casestudies Shiny input casestudies selector. See \link{casestudiesSelect}.
 #'
 #' @export
-extract_running_sim <- function(diseases) {
+extract_running_sim <- function(casestudies) {
   sim <- unlist(
-    lapply(seq_along(diseases), FUN = function(i) {
-      if (diseases[[i]]()) names(diseases)[[i]]
+    lapply(seq_along(casestudies), FUN = function(i) {
+      if (casestudies[[i]]()) names(casestudies)[[i]]
     })
   )
   sim <- dropNulls(sim)
@@ -82,7 +82,7 @@ extract_running_sim <- function(diseases) {
 #' except that the network is updated via \link[visNetwork]{visNetworkProxy}.
 #'
 #' @param edges A dataframe of edges provided by \link{generate_edges}.
-#' @param simulation Which disease is currently selected. See \link{extract_running_sim}.
+#' @param simulation Which casestudy is currently selected. See \link{extract_running_sim}.
 #' @param counter To determine which notification to display. We expect a counter
 #' returned by the \link{networkCaPO4} module.
 #' @param session Session object.
@@ -226,16 +226,16 @@ arrow_lighting <- function(edges, simulation, counter, session) {
 #' @description Use inside in the \link{userInfo}. Function that helps in generating 4 users fields,
 #' image, stat1, stat2 and stat3, so as to reinject them in the header userMenu
 #'
-#' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
-#' @param sliderDisease Shiny slider input related to the current disease severity.
+#' @param casestudies Shiny input casestudy selector. See \link{casestudiesSelect}.
+#' @param sliderCasestudies Shiny slider input related to the current casestudy severity.
 #' See \link{plotBox}.
 #'
 #' @export
-generate_userFields <- function(diseases, sliderDisease) {
-  if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-    if (diseases$php1()) {
-      req(sliderDisease())
-      if (sliderDisease() == 20) {
+generate_userFields <- function(casestudies, sliderCasestudies) {
+  if (casestudies$php1() | casestudies$hypopara() | casestudies$hypoD3()) {
+    if (casestudies$php1()) {
+      req(sliderCasestudies())
+      if (sliderCasestudies() == 20) {
         stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
                               "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
                               "<br>","<font color=\"#008000\"><b>","1.5 mM","</b></font>",
@@ -250,7 +250,7 @@ generate_userFields <- function(diseases, sliderDisease) {
                              "<br>","(3-16 pM)"))
         image <- "images_patient_info/sad.png"
         state <- "sick"
-      } else if (sliderDisease() == 100) {
+      } else if (sliderCasestudies() == 100) {
         stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
                               "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
                               "<br>","<font color=\"#008000\"><b>","2 mM","</b></font>",
@@ -281,9 +281,9 @@ generate_userFields <- function(diseases, sliderDisease) {
         image <- "images_patient_info/dead.png"
         state <- "dead"
       }
-    } else if (diseases$hypopara()) {
-      req(sliderDisease())
-      if (sliderDisease() == 0.5) {
+    } else if (casestudies$hypopara()) {
+      req(sliderCasestudies())
+      if (sliderCasestudies() == 0.5) {
         stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
                               "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
                               "<br>","1.2 mM",
@@ -298,7 +298,7 @@ generate_userFields <- function(diseases, sliderDisease) {
                              "<br>","(3-16 pM)"))
         image <- "images_patient_info/happy.png"
         state <- "sick"
-      } else if (sliderDisease() == 0.1) {
+      } else if (sliderCasestudies() == 0.1) {
         stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
                               "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
                               "<br>","<font color=\"#FF0000\"><b>","1 mM","</b></font>",
@@ -330,8 +330,8 @@ generate_userFields <- function(diseases, sliderDisease) {
         state <- "sick"
       }
     } else {
-      req(diseases$hypoD3())
-      if (sliderDisease() == 0.5) {
+      req(casestudies$hypoD3())
+      if (sliderCasestudies() == 0.5) {
         stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
                               "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
                               "<br>","1.2 mM",
@@ -346,7 +346,7 @@ generate_userFields <- function(diseases, sliderDisease) {
                              "<br>","(3-16 pM)"))
         image <- "images_patient_info/sad.png"
         state <- "sick"
-      } else if (sliderDisease() == 0.1) {
+      } else if (sliderCasestudies() == 0.1) {
         stat1 <- HTML( paste( "<p style=\"text-align:center;line-height:2.0\">",
                               "<font face =\"TimesNewRoman\" size=\"+1\">[<em><b>Ca<sup>2+</sup></b></em>]<sub><em><b>p</b></em></sub></font>",
                               "<br>","1.2 mM",

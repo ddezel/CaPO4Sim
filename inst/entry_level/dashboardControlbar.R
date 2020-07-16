@@ -23,7 +23,7 @@ rightsidebar <- rightSidebar(
   rightSidebarTabContent(
     id = 2,
     icon = "map",
-    diseaseSelectUi(id = "diseases"),
+    casestudiesSelectUi(id = "casestudies"),
     hr(),
     infosUi(id = "infos")
   ),

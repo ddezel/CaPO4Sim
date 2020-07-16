@@ -81,12 +81,12 @@ generate_network <- function(nodes, edges, usephysics = FALSE, isMobile) {
 #' @param organs Shiny input to toggle organs display. See \link{networkOptions}.
 #' @param regulations Shiny input to toggle hormone display. See \link{networkOptions}.
 #' @param background Shiny input background selector. See \link{networkOptions}.
-#' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
+#' @param casestudies Shiny input casestudies selector. See \link{casestudiesSelect}.
 #' @param organs_nodes_size Shiny input for organs node size. See \link{networkOptions}.
 #' @param hormones_nodes_size Shiny input for hormones node size. See \link{networkOptions}..
 #'
 #' @export
-generate_nodes <- function(components, organs, regulations, background, diseases,
+generate_nodes <- function(components, organs, regulations, background, casestudies,
                            organs_nodes_size, hormones_nodes_size) {
 
   req(organs_nodes_size(), hormones_nodes_size())
@@ -164,12 +164,12 @@ generate_nodes <- function(components, organs, regulations, background, diseases
 #' @param components Shiny input CardioRenal component selector. See \link{networkOptions}.
 #' @param organs Shiny input to toggle organs display. See \link{networkOptions}.
 #' @param regulations Shiny input to toggle hormone display. See \link{networkOptions}.
-#' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
+#' @param casestudies Shiny input casestudies selector. See \link{casestudiesSelect}.
 #' @param organs_edges_size Shiny input for organs edges size. See \link{networkOptions}.
 #' @param hormones_edges_size Shiny input for hormones edges size. See \link{networkOptions}.
 #'
 #' @export
-generate_edges <- function(components, organs, regulations, diseases,
+generate_edges <- function(components, organs, regulations, casestudies,
                            organs_edges_size, hormones_edges_size) {
 
   req(organs_edges_size(), hormones_edges_size())

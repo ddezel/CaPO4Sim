@@ -25,43 +25,43 @@ userInfoUi <- function(id) {
 #' @param input Shiny inputs
 #' @param output Shiny Outputs
 #' @param session Session object.
-#' @param diseases Shiny input disease selector. See \link{diseaseSelect}.
-#' @param sliderDisease Shiny input disease severity selector. See \link{plotBox}.
+#' @param casestudies Shiny input casestudies selector. See \link{casestudiesSelect}.
+#' @param sliderCasestudies Shiny input casestudy severity selector. See \link{plotBox}.
 #' @param help Help input.
 #'
 #' @export
-userInfo <- function(input, output, session, diseases, sliderDisease, help) {
+userInfo <- function(input, output, session, casestudies, sliderCasestudies, help) {
 
   # generate a patient profile
   output$user <- shinydashboardPlus::renderUser({
 
     ns <- session$ns
 
-    req(!is.null(diseases$php1()) | !is.null(diseases$hypopara()) | !is.null(diseases$hypoD3()))
+    req(!is.null(casestudies$php1()) | !is.null(casestudies$hypopara()) | !is.null(casestudies$hypoD3()))
 
     shinydashboardPlus::dashboardUser(
       name = "Vital Parameters",
-      src = if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-        generate_userFields(diseases, sliderDisease)$image
+      src = if (casestudies$php1() | casestudies$hypopara() | casestudies$hypoD3()) {
+        generate_userFields(casestudies, sliderCasestudies)$image
       } else {
         "images_patient_info/happy.png"
       },
-      title = if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-        generate_userFields(diseases, sliderDisease)$description
+      title = if (casestudies$php1() | casestudies$hypopara() | casestudies$hypoD3()) {
+        generate_userFields(casestudies, sliderCasestudies)$description
       } else {
         "healthy"
       },
-      subtitle = if (diseases$php1()) {
+      subtitle = if (casestudies$php1()) {
         "Rat has primary-hyperparathyroidism"
-      } else if (diseases$hypopara()) {
+      } else if (casestudies$hypopara()) {
         "Rat suffers from hypoparathyroidism"
-      } else if (diseases$hypoD3()) {
+      } else if (casestudies$hypoD3()) {
         "Rat has vitamin D3 defficiency"
       } else {
         "nothing to declare!"
       },
-      if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-        shinydashboardPlus::dashboardUserItem(width = 6, generate_userFields(diseases, sliderDisease)$stat1)
+      if (casestudies$php1() | casestudies$hypopara() | casestudies$hypoD3()) {
+        shinydashboardPlus::dashboardUserItem(width = 6, generate_userFields(casestudies, sliderCasestudies)$stat1)
       } else {
         shinydashboardPlus::dashboardUserItem(
           width = 6,
@@ -71,8 +71,8 @@ userInfo <- function(input, output, session, diseases, sliderDisease, help) {
                      "(1.1-1.4 mM)"))
         )
       },
-      if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-        shinydashboardPlus::dashboardUserItem(width = 6, generate_userFields(diseases, sliderDisease)$stat2)
+      if (casestudies$php1() | casestudies$hypopara() | casestudies$hypoD3()) {
+        shinydashboardPlus::dashboardUserItem(width = 6, generate_userFields(casestudies, sliderCasestudies)$stat2)
       } else {
         shinydashboardPlus::dashboardUserItem(
           width = 6,
@@ -82,8 +82,8 @@ userInfo <- function(input, output, session, diseases, sliderDisease, help) {
                      "(2.1-3.4 mM)"))
         )
       },
-      if (diseases$php1() | diseases$hypopara() | diseases$hypoD3()) {
-        shinydashboardPlus::dashboardUserItem(width = 12, generate_userFields(diseases, sliderDisease)$stat3)
+      if (casestudies$php1() | casestudies$hypopara() | casestudies$hypoD3()) {
+        shinydashboardPlus::dashboardUserItem(width = 12, generate_userFields(casestudies, sliderCasestudies)$stat3)
       } else {
         shinydashboardPlus::dashboardUserItem(
           width = 12,

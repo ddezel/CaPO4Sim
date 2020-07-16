@@ -7,7 +7,7 @@
 make_plot_hypopara(sliderVal, isMobile)
 }
 \arguments{
-\item{sliderVal}{Shiny slider input related to the current disease severity.
+\item{sliderVal}{Shiny slider input related to the current casestudy severity.
 See \link{plotBox}.}
 
 \item{isMobile}{Shiny input useful to scale elements based on the device screen size.}

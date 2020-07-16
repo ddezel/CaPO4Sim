@@ -25,7 +25,7 @@ animation_php1 <- list(
 # table for hypopara animation (same as php1)
 animation_hypopara <- animation_php1
 
-# table fir hypoD3
+# table for hypoD3
 animation_hypoD3 <- list(
   PTH = c(22:27),
   D3 = c(19:21),

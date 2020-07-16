@@ -46,7 +46,7 @@ server <- function(input, output, session) {
   }
 
   # disease answer list for students
-  diseases_list <- c(
+  casestudies_list <- c(
     "nephrolithiasis",
     "primary hyperparathroidism",
     "vitamin D3 intoxication",
@@ -135,7 +135,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # Create parameters sets for all diseases and treatments
+  # Create parameters sets for all casestudies and treatments
   parameters_disease <- reactive({
     c("k_prod_PTHg" = ifelse(
       patient_disease == "php1", 300*4.192,
@@ -800,7 +800,7 @@ server <- function(input, output, session) {
           selectInput(
             inputId = "disease_name",
             label = "",
-            choices = diseases_list,
+            choices = casestudies_list,
             selected = NULL,
             multiple = FALSE,
             selectize = TRUE,

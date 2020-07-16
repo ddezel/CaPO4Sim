@@ -1,23 +1,23 @@
-#' @title Create a disease selector UI module
+#' @title Create a casestudies selector UI module
 #'
 #' @description Contains php1, hypopara, hypoD3
 #'
 #' @param id module id.
 #'
 #' @export
-diseaseSelectUi <- function(id) {
+casestudiesSelectUi <- function(id) {
 
   ns <- NS(id)
 
-  diseases <- list(
+  casestudies <- list(
     labels = c("Baroreceptor Stimulation", "Haemorrhage", "High/Low Salt Diet"),
     ids = c("run_php1", "run_hypopara", "run_hypoD3")
   )
 
   tagList(
     h6("Case Studies"),
-    lapply(seq_along(diseases$ids), function(i) {
-      diseaseCheckBox(inputId = ns(diseases$ids[[i]]), label = diseases$labels[[i]])
+    lapply(seq_along(casestudies$ids), function(i) {
+      casestudiesCheckBox(inputId = ns(casestudies$ids[[i]]), label = casestudies$labels[[i]])
     }),
     # reset button
     shinyWidgets::actionBttn(
@@ -32,14 +32,14 @@ diseaseSelectUi <- function(id) {
 }
 
 
-#' @title Create a checkbox for \link{diseaseSelectUi}
+#' @title Create a checkbox for \link{casestudiesSelectUi}
 #'
 #' @description Create a \link[shinyWidgets]{prettyCheckbox}.
 #'
 #' @param inputId Checkbox Input id.
 #' @param label Checkbox label.
 #'
-diseaseCheckBox <- function(inputId, label) {
+casestudiesCheckBox <- function(inputId, label) {
   shinyWidgets::prettyCheckbox(
     inputId = inputId,
     label = label,
@@ -51,7 +51,7 @@ diseaseCheckBox <- function(inputId, label) {
 }
 
 
-#' @title Create a disease selector server logic
+#' @title Create a casestudies selector server logic
 #'
 #' @description Only returns inputs associated with php1, hypopara, hypoD3
 #'
@@ -60,12 +60,12 @@ diseaseCheckBox <- function(inputId, label) {
 #' @param session Session object.
 #'
 #' @export
-diseaseSelect <- function(input, output, session) {
+casestudiesSelect <- function(input, output, session) {
 
   #  Prevent user from selecting multiple boxes using shinyjs functions
   observeEvent(c(input$run_php1, input$run_hypopara, input$run_hypoD3), {
 
-    diseases <- list(
+    casestudies <- list(
       run_php1 = input$run_php1,
       run_hypopara = input$run_hypopara,
       run_hypoD3 = input$run_hypoD3
@@ -73,20 +73,20 @@ diseaseSelect <- function(input, output, session) {
     # extract the list of simulations and the current one as well as its index
     # to properly select boxes to enable/disable
     current_simulation <- unlist(
-      lapply(seq_along(diseases), FUN = function(i) {
-        if (diseases[[i]]) names(diseases)[[i]]
+      lapply(seq_along(casestudies), FUN = function(i) {
+        if (casestudies[[i]]) names(casestudies)[[i]]
       })
     )
-    index <- which(names(diseases) == current_simulation)
+    index <- which(names(casestudies) == current_simulation)
 
     # if one simulation run, disable all boxes that are not related to that one
     if (!is.null(current_simulation)) {
-      lapply(seq_along(diseases[-index]), FUN = function(i) {
-        shinyjs::disable(id = names(diseases[-index])[[i]])
+      lapply(seq_along(casestudies[-index]), FUN = function(i) {
+        shinyjs::disable(id = names(casestudies[-index])[[i]])
       })
     } else {# if no simulation runs, all boxes are available
-      lapply(seq_along(diseases), FUN = function(i) {
-        shinyjs::enable(id = names(diseases)[[i]])
+      lapply(seq_along(casestudies), FUN = function(i) {
+        shinyjs::enable(id = names(casestudies)[[i]])
       })
     }
   })

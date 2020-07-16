@@ -9,7 +9,7 @@ generate_nodes(
   organs,
   regulations,
   background,
-  diseases,
+  casestudies,
   organs_nodes_size,
   hormones_nodes_size
 )
@@ -23,7 +23,7 @@ generate_nodes(
 
 \item{background}{Shiny input background selector. See \link{networkOptions}.}
 
-\item{diseases}{Shiny input disease selector. See \link{diseaseSelect}.}
+\item{casestudies}{Shiny input casestudies selector. See \link{casestudiesSelect}.}
 
 \item{organs_nodes_size}{Shiny input for organs node size. See \link{networkOptions}.}
 
